@@ -4,4 +4,4 @@ execSync('yarn version --patch', { stdio: 'inherit' });
 
 const version = require('./package.json').version;
 
-spawnSync(`pkg src/cli.js -c package.json -o releases/${version}`);
+execSync(`pkg package.json -o releases/${version}`, { stdio: 'inherit' });

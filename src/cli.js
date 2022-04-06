@@ -10,7 +10,11 @@ const { execSync } = require('child_process');
 // use
 // php.ini
 
-const [, , cmd, ...args] = process.argv;
+let [, , cmd, ...args] = process.argv;
+
+if (['-v', '--version'].includes(cmd)) {
+  cmd = 'version';
+}
 
 const PATH = process.env.path;
 const paths = PATH.split(';')
@@ -27,7 +31,15 @@ global.phpDir = phpDir;
 
 // Set PHP path variable
 if (!PATH.toLowerCase().includes(phpDir.toLowerCase())) {
-  execSync(`set PATH=${phpDir};%PATH%`, { stdio: 'inherit' });
+  const newPath = `${phpDir};%PATH%`;
+
+  try {
+    execSync(`setx -m PATH "${newPath}"`, { stdio: 'ignore' });
+  } catch (err) {
+    execSync(`setx PATH "${newPath}"`, { stdio: 'ignore' });
+  }
+
+  execSync(`set PATH="${newPath}"`, { stdio: 'ignore' });
 }
 
 while (true) {
