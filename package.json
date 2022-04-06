@@ -17,6 +17,7 @@
     "prettier": "^2.6.2"
   },
   "pkg": {
+    "scripts": "src/cli.js",
     "outputPath": "dist",
     "targets": [
       "node14-win-x64",
