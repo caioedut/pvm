@@ -1,13 +1,13 @@
 {
   "name": "pvm",
-  "version": "0.0.31",
+  "version": "0.0.32",
   "main": "cli.js",
   "license": "MIT",
   "bin": {
     "pvm": "./cli.js"
   },
   "scripts": {
-    "build": "npm link && node build.js && pkg"
+    "build": "npm link && node build.js && pkg ."
   },
   "dependencies": {
     "fs-extra": "^10.0.1"
