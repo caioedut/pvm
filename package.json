@@ -1,6 +1,6 @@
 {
   "name": "pvm",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "main": "src/cli.js",
   "license": "MIT",
   "bin": {
@@ -17,7 +17,6 @@
     "prettier": "^2.6.2"
   },
   "pkg": {
-    "scripts": "src/**/*.js",
     "outputPath": "dist",
     "targets": [
       "node14-win-x64",
