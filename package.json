@@ -1,0 +1,19 @@
+{
+  "name": "pvm",
+  "version": "0.0.1",
+  "main": "src/cli.js",
+  "license": "MIT",
+  "bin": {
+    "pvm": "src/cli.js"
+  },
+  "scripts": {
+    "build": "node build.js"
+  },
+  "dependencies": {
+    "fs-extra": "^10.0.1"
+  },
+  "devDependencies": {
+    "pkg": "^5.6.0",
+    "prettier": "^2.6.2"
+  }
+}
