@@ -1,7 +1,7 @@
-const {execSync} = require('child_process');
+const { execSync, spawnSync } = require('child_process');
 
-execSync('yarn version --patch', {stdio: 'inherit'});
+execSync('yarn version --patch', { stdio: 'inherit' });
+
 const version = require('./package.json').version;
 
-execSync(`pkg src/cli.js -o releases/${version}`, {stdio: 'inherit'});
-
+spawnSync(`pkg src/cli.js -c package.json -o releases/${version}`);
