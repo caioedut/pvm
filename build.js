@@ -1,7 +1,15 @@
-const { execSync, spawnSync } = require('child_process');
+const {execSync} = require('child_process');
+const {exec} = require('pkg');
 
-execSync('yarn version --patch', { stdio: 'inherit' });
+(async function main() {
+  const options = {stdio: 'inherit'};
 
-const version = require('./package.json').version;
+  // Update package version
+  execSync('yarn version --patch', options);
 
-execSync(`pkg package.json -o releases/${version}`, { stdio: 'inherit' });
+  // Create bin
+  const version = require('./package.json').version;
+
+  // execSync(`pkg cli.js -c package.json -o releases/${version}`, options);
+  await exec(['cli.js', '-c', 'package.json', '-o', `releases/${version}`]);
+})();

@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+// const { execSync } = require('child_process');
 
 // install
 // uninstall
@@ -42,7 +42,7 @@ try {
   }
 
   // Run command script
-  require(`./scripts/${cmd}`)(args);
+  require(`./src/scripts/${cmd}`)(args);
 
   // Restore php.ini
   if (fs.existsSync(phpIniDir)) {
