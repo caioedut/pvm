@@ -1,26 +1,22 @@
 {
   "name": "pvm",
   "version": "0.0.38",
+  "description": "PHP Version Manager for Windows",
   "main": "cli.js",
+  "bin": "./cli.js",
   "license": "MIT",
-  "bin": {
-    "pvm": "./cli.js"
-  },
+  "author": "CaioEduT",
+  "repository": "https://github.com/caioedut/pvm",
   "engines": {
     "node": ">=14.0.0"
   },
   "scripts": {
-    "build": "npm link && node build.js"
+    "build": "node build.js"
   },
   "dependencies": {
     "axios": "^0.26.1",
     "extract-zip": "^2.0.1",
     "fs-extra": "^10.0.1"
-  },
-  "pkg": {
-    "targets": [
-      "node14-win-x64"
-    ]
   },
   "devDependencies": {
     "pkg": "^5.6.0",
