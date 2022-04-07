@@ -5,7 +5,7 @@ const fsExtra = require('fs-extra');
 const extract = require('extract-zip');
 
 module.exports = async (args) => {
-  const [version] = args;
+  let [version] = args;
   const [major] = version;
   const { platform } = process;
 
@@ -21,6 +21,13 @@ module.exports = async (args) => {
       const newVersion = Object.values(release)[1].zip;
       versions[release.version] = `https://windows.php.net/downloads/releases/${newVersion.path}`;
     }
+  }
+
+  // Version match
+  if (!versions[version]) {
+    const keys = Object.keys(versions);
+    const item = keys.find((key) => key.startsWith(version));
+    version = item || version;
   }
 
   // Check the museum versions

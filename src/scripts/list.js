@@ -12,6 +12,8 @@ module.exports = () => {
   console.log('Installed PHP versions:');
   console.log('');
 
+  const output = [];
+
   fs.readdirSync(dir, { withFileTypes: true })
     .filter((dirent) => dirent.isDirectory())
     .forEach(({ name }) => {
@@ -21,6 +23,8 @@ module.exports = () => {
 
       const preffix = version === current ? ' ->' : '   ';
 
-      console.log(`${preffix} ${name} (${version})`);
+      output.push(`${preffix} ${name} (${version})`);
     });
+
+  console.log(output.join(`\n`));
 };
