@@ -1,5 +1,6 @@
 @echo off
 
+mkdir %PROGRAMDATA%\pvm
 copy pvm.exe %PROGRAMDATA%\pvm
 
 :: PHP AND PVM PATH
