@@ -1,6 +1,6 @@
 {
   "name": "pvm",
-  "version": "0.0.52",
+  "version": "0.0.53",
   "description": "PHP Version Manager for Windows",
   "main": "cli.js",
   "bin": "./cli.js",
@@ -22,7 +22,10 @@
     "prettier": "^2.6.2"
   },
   "pkg": {
-    "scripts": "**/*.js",
+    "scripts": [
+      "cli.js",
+      "src/**/*.js"
+    ],
     "targets": [
       "node14-win-x64"
     ]
