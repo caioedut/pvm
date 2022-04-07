@@ -6,21 +6,31 @@ const { execSync } = require('child_process');
 
 let [, , cmd, ...args] = process.argv;
 
-if (!cmd || ['-v', '--version'].includes(cmd)) {
+if (['version', 'v', '--version', '-v'].includes(cmd)) {
   cmd = 'version';
 }
 
-const PATH = process.env.path;
+if (['install', 'i', 'add', 'a'].includes(cmd)) {
+  cmd = 'install';
+}
 
-const baseDir = path.join('C:', 'tools');
-const phpDir = path.join(baseDir, 'php');
-const phpIniDir = path.join(baseDir, 'php.ini');
-const phpIniTargetDir = path.join(phpDir, 'php.ini');
+if (['uninstall', 'u', 'remove', 'r', 'delete', 'd'].includes(cmd)) {
+  cmd = 'uninstall';
+}
+
+if (!cmd) {
+  cmd = 'help';
+}
 
 global.bin = 'pvm';
-global.baseDir = baseDir;
-global.phpDir = phpDir;
-global.phpIniDir = phpIniDir;
+global.pvmDir = path.dirname(require.main.filename);
+global.baseDir = path.join('C:', 'tools');
+global.phpDir = path.join(baseDir, 'php');
+global.versionsDir = path.join(baseDir, 'versions');
+
+// Php.ini
+global.phpIniFile = path.join(baseDir, 'php.ini');
+global.phpIniTargetFile = path.join(phpDir, 'php.ini');
 
 console.replace = function (...args) {
   process.stdout.clearLine(0);
@@ -30,6 +40,8 @@ console.replace = function (...args) {
     process.stdout.write(arg);
   }
 };
+
+const PATH = process.env.path;
 
 // Set PHP path variable
 if (!PATH.toLowerCase().includes(phpDir.toLowerCase())) {
@@ -47,17 +59,22 @@ if (!PATH.toLowerCase().includes(phpDir.toLowerCase())) {
       fs.mkdirSync(phpDir);
     }
 
+    // Create versions path if not exists
+    if (!fs.existsSync(versionsDir)) {
+      fs.mkdirSync(versionsDir);
+    }
+
     // Copy global php.ini if not exists
-    if (!fs.existsSync(phpIniDir) && fs.existsSync(phpIniTargetDir)) {
-      fs.copyFileSync(phpIniTargetDir, phpIniDir);
+    if (!fs.existsSync(phpIniFile) && fs.existsSync(phpIniTargetFile)) {
+      fs.copyFileSync(phpIniTargetFile, phpIniFile);
     }
 
     // Run command script
     await require(`./src/scripts/${cmd}`)(args);
 
     // Restore php.ini
-    if (fs.existsSync(phpIniDir)) {
-      fs.copyFileSync(phpIniDir, phpIniTargetDir);
+    if (fs.existsSync(phpIniFile)) {
+      fs.copyFileSync(phpIniFile, phpIniTargetFile);
     }
   } catch (err) {
     console.error(err.message);

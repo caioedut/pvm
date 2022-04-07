@@ -4,8 +4,6 @@ const axios = require('axios');
 const fsExtra = require('fs-extra');
 const extract = require('extract-zip');
 
-const rootDir = path.dirname(require.main.filename);
-
 module.exports = async (args) => {
   const [version] = args;
   const [major] = version;
@@ -39,7 +37,7 @@ module.exports = async (args) => {
     throw new Error(`PHP version ${version} is not available to install.`);
   }
 
-  const tmpDir = 'tmp';
+  const tmpDir = path.join(versionsDir, 'tmp');
   const targetDir = path.join(tmpDir, version);
   const zipDir = `${targetDir}.zip`;
 
@@ -67,14 +65,12 @@ module.exports = async (args) => {
     zipFileStream.on('error', reject);
 
     zipFileStream.on('finish', () => {
-      extract(path.join(rootDir, zipDir), { dir: path.join(rootDir, targetDir) })
-        .then(resolve)
-        .catch(reject);
+      extract(zipDir, { dir: targetDir }).then(resolve).catch(reject);
     });
   });
 
   // Copy version
-  const versionDir = path.join(global.baseDir, 'versions', version);
+  const versionDir = path.join(baseDir, 'versions', version);
   fsExtra.moveSync(targetDir, versionDir, { overwrite: true });
 
   // Delete temp folder
@@ -82,5 +78,5 @@ module.exports = async (args) => {
 
   console.log('');
   console.log(`PHP version ${version} has been installed.`);
-  console.log(`Run "${global.bin} use ${version}" to use it.`);
+  console.log(`Run "${bin} use ${version}" to use it.`);
 };
