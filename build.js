@@ -1,12 +1,25 @@
+const fs = require('fs');
 const { execSync } = require('child_process');
-const { exec } = require('pkg');
 
 (async function main() {
+  console.clear();
+
   const options = { stdio: 'inherit' };
+
+  console.log('Building .exe file...');
+
+  // Only production packages
+  execSync('yarn global add pkg');
+  execSync('yarn install --check-files --production');
 
   // Update package version
   execSync('yarn version --patch', options);
 
-  // execSync(`pkg cli.js -c package.json -o releases/${version}`, options);
-  await exec(['.', '-o', 'bin/pvm']);
+  // Package .exe
+  execSync(`pkg . -o bin/pvm`, options);
+
+  // Restore all packages
+  execSync('yarn install --check-files');
+
+  fs.copyFileSync('bin/pvm.exe', 'setup/pvm.exe');
 })();
