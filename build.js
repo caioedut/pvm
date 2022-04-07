@@ -8,18 +8,15 @@ const { execSync } = require('child_process');
 
   console.log('Building .exe file...');
 
-  // Only production packages
+  // Install packages
   execSync('yarn global add pkg');
-  execSync('yarn install --check-files --production');
+  execSync('yarn install --check-files');
 
   // Update package version
   execSync('yarn version --patch', options);
 
-  // Package .exe
+  // Compile to .exe
   execSync(`pkg . -o bin/pvm`, options);
-
-  // Restore all packages
-  execSync('yarn install --check-files');
 
   fs.copyFileSync('bin/pvm.exe', 'setup/pvm.exe');
 })();
