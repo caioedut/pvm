@@ -26,11 +26,6 @@
       "cli.js",
       "src/**/*.js"
     ],
-    "assets": [
-      "tmp/*.zip",
-      "tmp/**/*",
-      "tmp/*"
-    ],
     "targets": [
       "node14-win-x64"
     ]
