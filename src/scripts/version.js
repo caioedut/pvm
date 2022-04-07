@@ -1,4 +1,3 @@
-module.exports = function list() {
-  console.log('PVM Version:');
-  console.log(require('../../package.json').version);
+module.exports = () => {
+  console.log('Version:', require('../../package.json').version);
 };

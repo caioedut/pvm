@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-module.exports = function list() {
+module.exports = () => {
   const current = execSync(`php -r "echo PHP_VERSION;"`, {
     cwd: global.phpDir,
   }).toString();

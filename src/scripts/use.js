@@ -3,12 +3,12 @@ const path = require('path');
 const fsExtra = require('fs-extra');
 const { execSync } = require('child_process');
 
-module.exports = function use(args) {
+module.exports = (args) => {
   const [version] = args;
   const versionDir = path.join(global.baseDir, 'versions', version);
 
   if (!fs.existsSync(versionDir)) {
-    throw new Error(`PHP version ${version} is not installed`);
+    throw new Error(`PHP version ${version} is not installed.`);
   }
 
   if (!fs.existsSync(global.phpDir)) {

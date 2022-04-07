@@ -2,13 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-// const { execSync } = require('child_process');
-
-// install
-// uninstall
-// list
-// use
-// php.ini
+const { execSync } = require('child_process');
 
 let [, , cmd, ...args] = process.argv;
 
@@ -20,36 +14,54 @@ const PATH = process.env.path;
 
 const baseDir = path.join('C:', 'tools');
 const phpDir = path.join(baseDir, 'php');
-const phpIniDir = path.join(phpDir, '..', 'php.ini');
+const phpIniDir = path.join(baseDir, 'php.ini');
 const phpIniTargetDir = path.join(phpDir, 'php.ini');
 
+global.bin = 'pvm';
 global.baseDir = baseDir;
 global.phpDir = phpDir;
+global.phpIniDir = phpIniDir;
 
-// // Set PHP path variable
-// if (!PATH.toLowerCase().includes(phpDir.toLowerCase())) {
-//   const newPath = `${phpDir};%PATH%`;
-//   execSync(`setx PATH "${newPath}"`, { stdio: 'ignore' });
-//   execSync(`set PATH="${newPath}"`, { stdio: 'ignore' });
-// }
+console.replace = function (...args) {
+  process.stdout.clearLine(0);
+  process.stdout.cursorTo(0);
 
-console.log('');
-
-try {
-  // Copy global php.ini if not exists
-  if (!fs.existsSync(phpIniDir) && fs.existsSync(phpIniTargetDir)) {
-    fs.copyFileSync(phpIniTargetDir, phpIniDir);
+  for (const arg of args) {
+    process.stdout.write(arg);
   }
+};
 
-  // Run command script
-  require(`./src/scripts/${cmd}`)(args);
-
-  // Restore php.ini
-  if (fs.existsSync(phpIniDir)) {
-    fs.copyFileSync(phpIniDir, phpIniTargetDir);
-  }
-} catch (err) {
-  console.error(err.message);
+// Set PHP path variable
+if (!PATH.toLowerCase().includes(phpDir.toLowerCase())) {
+  const newPath = `${phpDir};%PATH%`;
+  execSync(`setx PATH "${newPath}"`, { stdio: 'ignore' });
+  execSync(`set PATH="${newPath}"`, { stdio: 'ignore' });
 }
 
-console.error('');
+(async function main() {
+  console.log('');
+
+  try {
+    // Create php path if not exists
+    if (!fs.existsSync(phpDir)) {
+      fs.mkdirSync(phpDir);
+    }
+
+    // Copy global php.ini if not exists
+    if (!fs.existsSync(phpIniDir) && fs.existsSync(phpIniTargetDir)) {
+      fs.copyFileSync(phpIniTargetDir, phpIniDir);
+    }
+
+    // Run command script
+    await require(`./src/scripts/${cmd}`)(args);
+
+    // Restore php.ini
+    if (fs.existsSync(phpIniDir)) {
+      fs.copyFileSync(phpIniDir, phpIniTargetDir);
+    }
+  } catch (err) {
+    console.error(err.message);
+  }
+
+  console.error('');
+})();
