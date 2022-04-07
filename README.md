@@ -1,34 +1,27 @@
-## Docs
-[https://confluence.unyleya.com.br/pages/viewpage.action?pageId=27585744](https://confluence.unyleya.com.br/pages/viewpage.action?pageId=27585744)
-<br/>
-[https://confluence.unyleya.com.br/pages/viewpage.action?pageId=27585727](https://confluence.unyleya.com.br/pages/viewpage.action?pageId=27585727)
+## PHP Version Manager
+Created for Windows.
 
-## Cofiguração
-Crie um arquivo `.env` na raiz e configure os valores se baseando no arquivo `.env.example` que está no repositório.
+## CLI
+### `pvm version`
+Show current `pvm-cli` version.
 
-### GitFlow
-```ssh
-[gitflow "branch"]
-    master = master
-    develop = develop
-```
+### `pvm dir`
+Show installed PHP directory used by PVM.
 
-## UI
-O Material UI (v5) foi utilizado como biblioteca de UI. Acesse a documentação em: [https://mui.com/pt/versions](https://mui.com/pt/versions).
+### `pvm install X.X.X`
+Install a PHP version.
 
-## Scripts
-### `yarn dev`
-Executa o aplicativo no modo de desenvolvimento, em [http://localhost:3000](http://localhost:3000).
+### `pvm uninstall X.X.X`
+Uninstall a PHP version.
 
-### `yarn gen`
-Para gerar páginas e componentes a partir do template padrão, utilize como nos exemplos:
-```ssh
-yarn gen page common/Error404
-yarn gen page admin/Dashboard
-yarn gen page admin/Dashboard/form
-yarn gen component Button
-```
+### `pvm list`
+List all installed PHP versions.
 
-### `yarn build`
-Compila o aplicativo para produção na pasta `build`.
-Ele agrupa corretamente o React no modo de produção e otimiza a compilação para o melhor desempenho.
+### `pvm use X.X.X`
+Change PHP version.
+
+### `pvm php.ini`
+Open php.ini to allow editing (see `pvm refresh`).
+
+### `pvm refresh`
+Refresh changes on php.ini (see `pvm php.ini`).
