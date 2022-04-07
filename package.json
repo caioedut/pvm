@@ -1,6 +1,6 @@
 {
   "name": "pvm",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "main": "cli.js",
   "license": "MIT",
   "bin": {
@@ -19,9 +19,7 @@
   },
   "pkg": {
     "targets": [
-      "node14-win-x64",
-      "node14-macos-x64",
-      "node14-linux-arm64"
+      "node14-win-x64"
     ]
   },
   "devDependencies": {
