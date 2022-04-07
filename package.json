@@ -1,6 +1,6 @@
 {
   "name": "pvm",
-  "version": "0.0.60",
+  "version": "0.0.61",
   "description": "PHP Version Manager for Windows",
   "main": "cli.js",
   "bin": "./cli.js",
@@ -27,7 +27,7 @@
       "src/**/*.js"
     ],
     "assets": [
-      "pvm/tmp/**/*"
+      "tmp/**/*"
     ],
     "targets": [
       "node14-win-x64"
