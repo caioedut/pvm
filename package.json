@@ -1,6 +1,6 @@
 {
   "name": "pvm",
-  "version": "0.0.72",
+  "version": "0.1.0",
   "description": "PHP Version Manager for Windows",
   "main": "cli.js",
   "bin": "./cli.js",

@@ -15,5 +15,5 @@ const { execSync } = require('child_process');
   execSync(`pkg . -o bin/pvm`, options);
 
   // Update package version
-  execSync('yarn version --patch', options);
+  // execSync('yarn version --patch', options);
 })();
