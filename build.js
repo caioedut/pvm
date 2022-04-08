@@ -1,4 +1,3 @@
-const fs = require('fs');
 const { execSync } = require('child_process');
 
 (async function main() {
@@ -14,8 +13,6 @@ const { execSync } = require('child_process');
 
   // Compile to .exe
   execSync(`pkg . -o bin/pvm`, options);
-
-  fs.copyFileSync('bin/pvm.exe', 'setup/pvm.exe');
 
   // Update package version
   execSync('yarn version --patch', options);
