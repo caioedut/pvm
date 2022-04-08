@@ -2,7 +2,7 @@
 $packageArgs = @{
   packageName   = 'php-version-manager'
   softwareName  = 'php-version-manager*'  #part or all of the Display Name as you see it in Programs and Features. It should be enough to be unique
-  fileType      = 'EXE_MSI_OR_MSU' #only one of these: MSI or EXE (ignore MSU for now)
+  fileType      = 'EXE' #only one of these: MSI or EXE (ignore MSU for now)
 
   validExitCodes= @(0, 3010, 1605, 1614, 1641) # https://msdn.microsoft.com/en-us/library/aa376931(v=vs.85).aspx
 

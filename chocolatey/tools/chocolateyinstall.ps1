@@ -9,7 +9,7 @@ $packageArgs = @{
   fileType      = 'EXE' #only one of these: exe, msi, msu
   #url           = $url
   #url64bit      = $url64
-  #file         = $fileLocation
+  file         = $fileLocation
 
   softwareName  = 'php-version-manager*' #part or all of the Display Name as you see it in Programs and Features. It should be enough to be unique
 
