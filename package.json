@@ -11,8 +11,10 @@
     "node": ">=14.0.0"
   },
   "scripts": {
-    "build": "node build.js",
-    "setup": "node setup.js"
+    "build": "node compiler/build.js",
+    "setup": "node compiler/setup.js",
+    "choco": "node compiler/choco.js",
+    "deploy": "yarn build && yarn setup && yarn choco"
   },
   "dependencies": {
     "axios": "^0.26.1",
@@ -20,6 +22,7 @@
     "fs-extra": "^10.0.1"
   },
   "devDependencies": {
+    "dotenv": "^16.0.0",
     "prettier": "^2.6.2"
   },
   "pkg": {
