@@ -1,6 +1,6 @@
 {
   "name": "pvm",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "PHP Version Manager for Windows",
   "main": "cli.js",
   "bin": "./cli.js",
@@ -12,7 +12,7 @@
   },
   "scripts": {
     "build": "node build.js",
-    "setup": "iscc inno/config.iss"
+    "setup": "node setup.js"
   },
   "dependencies": {
     "axios": "^0.26.1",

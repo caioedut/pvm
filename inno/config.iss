@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "PHP Version Manager"
-#define MyAppVersion "0.1.1"
+#define MyAppVersion "0.1.2"
 #define MyAppPublisher "CaioEduT"
 #define MyAppURL "https://github.com/caioedut/pvm"
 #define MyAppExeName "pvm.exe"

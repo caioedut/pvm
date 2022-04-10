@@ -16,4 +16,7 @@ const { execSync } = require('child_process');
 
   // Update package version
   // execSync('yarn version --patch', options);
+
+  // Done
+  console.log('File pvm.exe (CLI) has been created on directory "bin".');
 })();
