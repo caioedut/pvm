@@ -12,7 +12,7 @@ const { execSync } = require('child_process');
   execSync(`signtool sign /a /fd SHA256 bin/pvm-setup.exe`, options);
 
   // Check certificate
-  // execSync(`signtool verify bin/pvm-setup.exe`, options);
+  // execSync(`signtool verify /pa bin/pvm-setup.exe`, options);
 
   // Done
   console.log('File pvm-setup.exe was created and signed on directory "bin".');

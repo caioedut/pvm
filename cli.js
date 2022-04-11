@@ -41,15 +41,6 @@ console.replace = function (...args) {
   }
 };
 
-const PATH = process.env.path;
-
-// Set PHP path variable
-if (!PATH.toLowerCase().includes(phpDir.toLowerCase())) {
-  const newPath = `${phpDir};%PATH%`;
-  execSync(`setx PATH "${newPath}"`, { stdio: 'ignore' });
-  execSync(`set PATH="${newPath}"`, { stdio: 'ignore' });
-}
-
 (async function main() {
   console.log('');
 
