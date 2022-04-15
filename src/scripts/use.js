@@ -5,7 +5,7 @@ const { execSync } = require('child_process');
 
 module.exports = (args) => {
   const [version] = args;
-  const versionDir = path.join(global.baseDir, 'versions', version);
+  const versionDir = path.join(versionsDir, version);
 
   if (!fs.existsSync(versionDir)) {
     throw new Error(`PHP version ${version} is not installed.`);
@@ -18,6 +18,6 @@ module.exports = (args) => {
   fsExtra.copySync(versionDir, global.phpDir, { overwrite: true });
 
   execSync('php -v', { stdio: 'inherit', cwd: global.phpDir });
-  console.log('');
-  console.log(`Now using PHP version ${version}`);
+  log.nl('');
+  log.success(`Now using PHP version ${version}`);
 };

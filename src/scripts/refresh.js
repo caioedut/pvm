@@ -1,3 +1,4 @@
 module.exports = () => {
-  console.log('Refresh done.');
+  // Refresh runs everytime on cli.js
+  log.success('Refresh done.');
 };

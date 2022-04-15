@@ -5,8 +5,8 @@ module.exports = (args) => {
   const [version] = args;
 
   // Delete folder
-  const versionDir = path.join(global.baseDir, 'versions', version);
+  const versionDir = path.join(versionsDir, version);
   fsExtra.removeSync(versionDir);
 
-  console.log(`PHP version ${version} has been uninstalled.`);
+  log.success(`PHP version ${version} has been uninstalled.`);
 };

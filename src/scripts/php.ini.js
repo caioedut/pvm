@@ -8,6 +8,6 @@ module.exports = () => {
 
   execSync(`${cmd || 'xdg-open'} ${global.phpIniFile}`);
 
-  console.log('php.ini file opened.');
-  console.log(`After editing, run "${global.bin} refresh".`);
+  log.success('php.ini file opened.');
+  log.info(`After editing, run "${global.bin} refresh".`);
 };

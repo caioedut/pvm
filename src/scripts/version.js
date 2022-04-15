@@ -1,3 +1,3 @@
 module.exports = () => {
-  console.log('Version:', require('../../package.json').version);
+  log.info('Version:', require('../../package.json').version);
 };

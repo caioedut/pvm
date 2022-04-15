@@ -11,7 +11,7 @@ module.exports = async (args) => {
 
   const versions = {};
 
-  console.log('Checking...');
+  log.print('Checking...');
 
   if (platform === 'win32') {
     // Check current releases
@@ -53,7 +53,7 @@ module.exports = async (args) => {
     fs.mkdirSync(tmpDir);
   }
 
-  console.log('Downloading...');
+  log.print('Downloading...');
 
   const url = versions[version];
   const zipFileStream = fs.createWriteStream(zipDir);
@@ -66,7 +66,7 @@ module.exports = async (args) => {
       response.data.pipe(zipFileStream);
     });
 
-  console.log('Extracting...');
+  log.print('Extracting...');
 
   await new Promise((resolve, reject) => {
     zipFileStream.on('error', reject);
@@ -83,7 +83,7 @@ module.exports = async (args) => {
   // Delete temp folder
   fsExtra.removeSync(tmpDir);
 
-  console.log('');
-  console.log(`PHP version ${version} has been installed.`);
-  console.log(`Run "${bin} use ${version}" to use it.`);
+  log.nl('');
+  log.success(`PHP version ${version} has been installed.`);
+  log.info(`Run "${bin} use ${version}" to use it.`);
 };

@@ -8,7 +8,7 @@ const { execSync } = require('child_process');
   console.log('Building .exe file...');
 
   // Install packages
-  execSync('yarn global add pkg');
+  execSync('npm install -g pkg');
   execSync('yarn install --check-files');
 
   // Compile to .exe

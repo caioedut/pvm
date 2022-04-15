@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
+const chalk = require('chalk');
 
 let [, , cmd, ...args] = process.argv;
 
@@ -32,17 +33,18 @@ global.versionsDir = path.join(baseDir, 'versions');
 global.phpIniFile = path.join(baseDir, 'php.ini');
 global.phpIniTargetFile = path.join(phpDir, 'php.ini');
 
-console.replace = function (...args) {
-  process.stdout.clearLine(0);
-  process.stdout.cursorTo(0);
-
-  for (const arg of args) {
-    process.stdout.write(arg);
-  }
+// Beauty log
+global.log = {
+  nl: () => console.log(''),
+  print: (...args) => console.log(...args),
+  info: (...args) => console.log(chalk.hex('#2196f3')(...args)),
+  success: (...args) => console.log(chalk.hex('#4caf50')(...args)),
+  warning: (...args) => console.log(chalk.hex('#ff9800')(...args)),
+  error: (...args) => console.log(chalk.hex('#f44336')(...args)),
 };
 
 (async function main() {
-  console.log('');
+  log.nl();
 
   try {
     // Create php path if not exists
@@ -60,6 +62,24 @@ console.replace = function (...args) {
       fs.copyFileSync(phpIniTargetFile, phpIniFile);
     }
 
+    // Check if php is already installed
+    try {
+      const instStr = 'Loaded Configuration File => ';
+      const instFind = execSync(`php -i | findstr  /R /C:"${instStr}"`).toString() || '';
+      const instPhp = instFind
+        .substring(instStr.length)
+        .trim()
+        .replace(/[\\\/]php\.ini$/, '')
+        .split(/[\\\/]/g)
+        .join(path.sep);
+
+      if (instPhp && instPhp !== phpDir) {
+        log.warning('A not managed PHP version is installed. This may cause conflicts.');
+        log.warning('Check the system environment variable PATH.');
+        log.warning(`Directory: "${instPhp}".\n`);
+      }
+    } catch (err) {}
+
     // Run command script
     await require(`./src/scripts/${cmd}`)(args);
 
@@ -68,8 +88,8 @@ console.replace = function (...args) {
       fs.copyFileSync(phpIniFile, phpIniTargetFile);
     }
   } catch (err) {
-    console.error(err.message);
+    log.error(err.message);
   }
 
-  console.error('');
+  log.nl();
 })();

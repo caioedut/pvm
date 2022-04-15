@@ -7,24 +7,28 @@ module.exports = () => {
     cwd: global.phpDir,
   }).toString();
 
-  const dir = path.join(global.baseDir, 'versions');
+  log.print('Installed PHP versions:');
+  log.nl('');
 
-  console.log('Installed PHP versions:');
-  console.log('');
-
-  const output = [];
-
-  fs.readdirSync(dir, { withFileTypes: true })
+  fs.readdirSync(versionsDir, { withFileTypes: true })
     .filter((dirent) => dirent.isDirectory())
     .forEach(({ name }) => {
-      const version = execSync(`php -r "echo PHP_VERSION;"`, {
-        cwd: path.join(dir, name),
-      }).toString();
+      const cwd = path.join(versionsDir, name);
 
-      const preffix = version === current ? ' ->' : '   ';
+      const version = execSync(`php -r "echo PHP_VERSION;"`, { cwd }).toString().trim();
 
-      output.push(`${preffix} ${name} (${version})`);
+      const intSize = execSync(`php -r "echo PHP_INT_SIZE;"`, { cwd }).toString().trim();
+      const arch = +intSize === 4 ? '32 bit' : '64 bit';
+
+      const thread = execSync(`php -i | findstr "Thread"`, { cwd }).toString().trim();
+      const safety = thread.includes('enabled') ? '[Thread Safety]' : '';
+
+      const output = `${version} (${arch}) ${safety}`;
+
+      if (version === current) {
+        log.success(` -> ${output}`);
+      } else {
+        log.info(`    ${output}`);
+      }
     });
-
-  console.log(output.join(`\n`));
 };
