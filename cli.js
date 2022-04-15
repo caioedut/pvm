@@ -63,22 +63,24 @@ global.log = {
     }
 
     // Check if php is already installed
-    try {
-      const instStr = 'Loaded Configuration File => ';
-      const instFind = execSync(`php -i | findstr  /R /C:"${instStr}"`).toString() || '';
-      const instPhp = instFind
-        .substring(instStr.length)
-        .trim()
-        .replace(/[\\\/]php\.ini$/, '')
-        .split(/[\\\/]/g)
-        .join(path.sep);
+    if (cmd !== 'use') {
+      try {
+        const instStr = 'Loaded Configuration File => ';
+        const instFind = execSync(`php -i | findstr /C:"${instStr}"`).toString() || '';
+        const instPhp = instFind
+          .substring(instStr.length)
+          .trim()
+          .replace(/[\\\/]php\.ini$/, '')
+          .split(/[\\\/]/g)
+          .join(path.sep);
 
-      if (instPhp && instPhp !== phpDir) {
-        log.warning('A not managed PHP version is installed. This may cause conflicts.');
-        log.warning('Check the system environment variable PATH.');
-        log.warning(`Directory: "${instPhp}".\n`);
-      }
-    } catch (err) {}
+        if (instPhp && instPhp !== phpDir) {
+          log.warning('A not managed PHP version is installed. This may cause conflicts.');
+          log.warning('Check the system environment variable PATH.');
+          log.warning(`Directory: "${instPhp}".\n`);
+        }
+      } catch (err) {}
+    }
 
     // Run command script
     await require(`./src/scripts/${cmd}`)(args);

@@ -11,8 +11,14 @@ module.exports = (args) => {
     throw new Error(`PHP version ${version} is not installed.`);
   }
 
-  if (!fs.existsSync(global.phpDir)) {
-    fs.mkdirSync(global.phpDir, { recursive: true });
+  if (!fs.existsSync(phpDir)) {
+    fs.mkdirSync(phpDir, { recursive: true });
+  }
+
+  // Check non existing extensions no new version
+  const extDir = path.join(phpDir, 'ext');
+  if (fs.existsSync(extDir)) {
+    fsExtra.copySync(extDir, path.join(versionDir, 'ext'), { overwrite: false });
   }
 
   fsExtra.copySync(versionDir, global.phpDir, { overwrite: true });
