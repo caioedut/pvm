@@ -1,5 +1,5 @@
 #define MyAppName "PHP Version Manager"
-#define MyAppVersion "0.1.3"
+#define MyAppVersion "0.1.4"
 #define MyAppPublisher "CaioEduT"
 #define MyAppURL "https://github.com/caioedut/pvm"
 #define MyAppExeName "pvm.exe"
