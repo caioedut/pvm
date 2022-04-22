@@ -7,6 +7,9 @@ const { execSync } = require('child_process');
 
   console.log('Pushing to Chocolatey...');
 
+  // Pack
+  execSync(`choco pack`, options);
+
   // Push to Chocolatey
   execSync(`choco push --key=${process.env.CHOCO_API_KEY}`, options);
 

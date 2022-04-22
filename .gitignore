@@ -1,3 +1,6 @@
+# chocolatey
+*.nupkg
+
 # env
 *.env
 .env.local
