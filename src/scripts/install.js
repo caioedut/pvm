@@ -15,11 +15,29 @@ module.exports = async (args) => {
 
   if (platform === 'win32') {
     // Check current releases
-    const { data: releases } = await axios.get('https://windows.php.net/downloads/releases/releases.json');
+    const { data } = await axios.get('https://windows.php.net/downloads/releases/releases.json');
+    const releases = Object.values(data).reverse();
 
-    for (const release of Object.values(releases)) {
+    for (const release of releases) {
       const newVersion = Object.values(release)[1].zip;
       versions[release.version] = `https://windows.php.net/downloads/releases/${newVersion.path}`;
+    }
+
+    // Check the museum versions
+    if (major.trim().substring(0, 1) >= 5) {
+      try {
+        const { data: html } = await axios.get(`https://museum.php.net/php${major}`);
+        const regex = new RegExp(`php-${major}[\\d|.]*?-Win32.zip`, 'gi');
+
+        const museums = (html.match(regex) || [])
+          .filter((value, index, array) => array.indexOf(value) === index)
+          .sort((a, b) => b.replace(/\D/g, '') - a.replace(/\D/g, ''));
+
+        for (const museum of museums) {
+          const itemVersion = museum.replace('php-', '').replace(/-Win32.zip/gi, '');
+          versions[itemVersion] = `https://museum.php.net/php${major}/${museum}`;
+        }
+      } catch (err) {}
     }
   }
 
@@ -28,15 +46,6 @@ module.exports = async (args) => {
     const keys = Object.keys(versions);
     const item = keys.find((key) => key.startsWith(version));
     version = item || version;
-  }
-
-  // Check the museum versions
-  if (!versions[version]) {
-    try {
-      const downloadURL = `https://museum.php.net/php${major}/php-${version}-Win32.zip`;
-      await axios.head(downloadURL, {});
-      versions[version] = downloadURL;
-    } catch (err) {}
   }
 
   // Check finally if found a version
@@ -83,7 +92,7 @@ module.exports = async (args) => {
   // Delete temp folder
   fsExtra.removeSync(tmpDir);
 
-  log.nl('');
+  log.nl();
   log.success(`PHP version ${version} has been installed.`);
   log.info(`Run "${bin} use ${version}" to use it.`);
 };

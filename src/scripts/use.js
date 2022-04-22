@@ -24,6 +24,6 @@ module.exports = (args) => {
   fsExtra.copySync(versionDir, global.phpDir, { overwrite: true });
 
   execSync('php -v', { stdio: 'inherit', cwd: global.phpDir });
-  log.nl('');
+  log.nl();
   log.success(`Now using PHP version ${version}`);
 };

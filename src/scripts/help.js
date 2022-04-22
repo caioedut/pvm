@@ -20,7 +20,7 @@ module.exports = () => {
   for (const action of actions) {
     console.log(
       // Pretty print
-      chalk.hex('#4caf50')('  ', action.action.padEnd(length, ' ')),
+      chalk.hex('#4caf50')(' ', action.action.padEnd(length, ' ')),
       chalk.hex('#2196f3')(action.description),
     );
   }

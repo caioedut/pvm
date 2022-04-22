@@ -8,7 +8,7 @@ module.exports = () => {
   }).toString();
 
   log.print('Installed PHP versions:');
-  log.nl('');
+  log.nl();
 
   fs.readdirSync(versionsDir, { withFileTypes: true })
     .filter((dirent) => dirent.isDirectory())
