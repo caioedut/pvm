@@ -2,7 +2,7 @@ const path = require('path');
 const fsExtra = require('fs-extra');
 
 module.exports = (args) => {
-  const [version] = args;
+  const version = getFullVersion(args[0]);
 
   // Delete folder
   const versionDir = path.join(versionsDir, version);

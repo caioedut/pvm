@@ -43,6 +43,24 @@ global.log = {
   error: (...args) => console.log(chalk.hex('#f44336')(...args)),
 };
 
+// Get full version
+global.getFullVersion = (key) => {
+  let version = key;
+
+  const versions = fs
+    .readdirSync(versionsDir, { withFileTypes: true })
+    .filter((dirent) => dirent.isDirectory())
+    .map(({ name }) => name)
+    .reverse();
+
+  if (!versions.includes(version)) {
+    const item = versions.find((ver) => ver.startsWith(version));
+    version = item || version;
+  }
+
+  return version;
+};
+
 (async function main() {
   log.nl();
 

@@ -4,7 +4,7 @@ const fsExtra = require('fs-extra');
 const { execSync } = require('child_process');
 
 module.exports = (args) => {
-  const [version] = args;
+  const version = getFullVersion(args[0]);
   const versionDir = path.join(versionsDir, version);
 
   if (!fs.existsSync(versionDir)) {
