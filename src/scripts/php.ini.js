@@ -6,8 +6,8 @@ module.exports = () => {
     win32: 'start',
   }[process.platform];
 
-  execSync(`${cmd || 'xdg-open'} ${global.phpIniFile}`);
+  execSync(`${cmd || 'xdg-open'} ${phpIniFile}`);
 
   log.success('php.ini file opened.');
-  log.info(`After editing, run "${global.bin} refresh".`);
+  log.info(`After editing, run "${bin} refresh".`);
 };

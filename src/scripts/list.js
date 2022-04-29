@@ -4,7 +4,7 @@ const { execSync } = require('child_process');
 
 module.exports = () => {
   const current = execSync(`php -r "echo PHP_VERSION;"`, {
-    cwd: global.phpDir,
+    cwd: phpDir,
   }).toString();
 
   log.print('Installed PHP versions:');

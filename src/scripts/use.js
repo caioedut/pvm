@@ -15,15 +15,15 @@ module.exports = (args) => {
     fs.mkdirSync(phpDir, { recursive: true });
   }
 
-  // Check non existing extensions no new version
+  // Check non existing extensions on new version
   const extDir = path.join(phpDir, 'ext');
   if (fs.existsSync(extDir)) {
     fsExtra.copySync(extDir, path.join(versionDir, 'ext'), { overwrite: false });
   }
 
-  fsExtra.copySync(versionDir, global.phpDir, { overwrite: true });
+  fsExtra.copySync(versionDir, phpDir, { overwrite: true });
+  execSync('php -v', { stdio: 'inherit', cwd: phpDir });
 
-  execSync('php -v', { stdio: 'inherit', cwd: global.phpDir });
   log.nl();
   log.success(`Now using PHP version ${version}`);
 };

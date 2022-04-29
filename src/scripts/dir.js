@@ -6,5 +6,5 @@ module.exports = () => {
     win32: 'start',
   }[process.platform];
 
-  execSync(`${cmd || 'xdg-open'} ${global.baseDir}`);
+  execSync(`${cmd || 'xdg-open'} ${baseDir}`);
 };
