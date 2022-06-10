@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const { execSync } = require('child_process');
 const chalk = require('chalk');
@@ -67,21 +67,21 @@ global.getFullVersion = (key) => {
   try {
     // Create php path if not exists
     if (!fs.existsSync(phpDir)) {
-      fs.mkdirSync(phpDir);
+      fs.mkdirSync(phpDir, { recursive: true });
     }
 
     // Create versions path if not exists
     if (!fs.existsSync(versionsDir)) {
-      fs.mkdirSync(versionsDir);
+      fs.mkdirSync(versionsDir, { recursive: true });
     }
 
-    // Copy global php.ini if not exists
-    if (!fs.existsSync(phpIniFile) && fs.existsSync(phpIniTargetFile)) {
-      fs.copyFileSync(phpIniTargetFile, phpIniFile);
-    }
+    // // Copy global php.ini if not exists
+    // if (!fs.existsSync(phpIniFile) && fs.existsSync(phpIniTargetFile)) {
+    //   fs.copyFileSync(phpIniTargetFile, phpIniFile);
+    // }
 
     // Check if php is already installed
-    if (cmd !== 'use') {
+    if (cmd !== 'use' && fs.existsSync(path.join(phpDir, 'php.exe'))) {
       try {
         const instStr = 'Loaded Configuration File => ';
         const instFind = execSync(`php -i | findstr /C:"${instStr}"`).toString() || '';
@@ -102,6 +102,16 @@ global.getFullVersion = (key) => {
 
     // Run command script
     await require(`./src/scripts/${cmd}`)(args);
+
+    // Create php.ini if not exists
+    const inis = ['php.ini', 'php.ini-development', 'php.ini-production'];
+    for (const ini of inis) {
+      const iniFile = path.join(phpDir, ini);
+      if (!fs.existsSync(phpIniFile) && fs.existsSync(iniFile)) {
+        fs.copyFileSync(iniFile, phpIniFile);
+        break;
+      }
+    }
 
     // Restore php.ini
     if (fs.existsSync(phpIniFile)) {

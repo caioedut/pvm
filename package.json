@@ -2,11 +2,11 @@
   "name": "pvm",
   "version": "0.1.4",
   "description": "PHP Version Manager for Windows",
+  "author": "CaioEduT",
+  "repository": "https://github.com/caioedut/pvm",
   "main": "cli.js",
   "bin": "./cli.js",
   "license": "MIT",
-  "author": "CaioEduT",
-  "repository": "https://github.com/caioedut/pvm",
   "engines": {
     "node": ">=14.0.0"
   },
